@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import zxcvbn from "zxcvbn";
+import { API_URL } from "../../utils/config";
 
 const registerSchema = z
   .object({
@@ -48,10 +49,7 @@ const Register = () => {
 
     // Sent to Backend
     try {
-      const res = await axios.post(
-        "https://ecommerce-back-end-ten.vercel.app/api/register",
-        data
-      );
+      const res = await axios.post(`${API_URL}/api/register`, data);
       toast.success(res.data);
     } catch (err) {
       const errMsg = err.response?.data?.message;

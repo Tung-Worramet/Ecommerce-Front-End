@@ -1,8 +1,9 @@
 import axios from "axios";
+import { API_URL } from "../utils/config";
 
 export const payment = async (token) =>
   await axios.post(
-    "https://ecommerce-back-end-ten.vercel.app/api/user/create-payment-intent",
+    `${API_URL}/api/user/create-payment-intent`,
     {},
     {
       headers: {

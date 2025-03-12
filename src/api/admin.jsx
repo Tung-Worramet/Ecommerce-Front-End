@@ -1,19 +1,17 @@
 import axios from "axios";
+import { API_URL } from "../utils/config";
 
 export const getOrdersAdmin = async (token) => {
-  return await axios.get(
-    "https://ecommerce-back-end-ten.vercel.app/api/admin/orders",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return await axios.get(`${API_URL}/api/admin/orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const changeOrdersStatus = async (token, orderId, orderStatus) => {
   return await axios.put(
-    "https://ecommerce-back-end-ten.vercel.app/api/admin/order-status",
+    `${API_URL}/api/admin/order-status`,
     {
       orderId,
       orderStatus,
@@ -27,36 +25,25 @@ export const changeOrdersStatus = async (token, orderId, orderStatus) => {
 };
 
 export const getListAllUsers = async (token) => {
-  return await axios.get(
-    "https://ecommerce-back-end-ten.vercel.app/api/users",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return await axios.get(`${API_URL}/api/users`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const changeUserStatus = async (token, value) => {
-  return await axios.post(
-    "https://ecommerce-back-end-ten.vercel.app/api/change-status",
-    value,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return await axios.post(`${API_URL}/api/change-status`, value, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 export const changeUserRole = async (token, value) => {
-  return await axios.post(
-    "https://ecommerce-back-end-ten.vercel.app/api/change-role",
-    value,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return await axios.post(`${API_URL}/api/change-role`, value, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };

@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { listCategory } from "../api/Category";
 import { listProduct, searchFilters } from "../api/product";
 import _ from "lodash";
+import { API_URL } from "../utils/config";
 
 // get คือเป็นการเข้าถึงตัวแปรใน store ของเขาเอง
 const ecomStore = (set, get) => ({
@@ -54,10 +55,7 @@ const ecomStore = (set, get) => ({
     }, 0);
   },
   actionLogin: async (form) => {
-    const res = await axios.post(
-      "https://ecommerce-back-end-ten.vercel.app/api/login",
-      form
-    );
+    const res = await axios.post(`${API_URL}/api/login`, form);
     // console.log(res.data.token);
     set({
       user: res.data.payload,

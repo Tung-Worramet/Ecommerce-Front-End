@@ -1,8 +1,9 @@
 import axios from "axios";
+import { API_URL } from "../utils/config";
 
 export const currentUser = async (token) =>
   await axios.post(
-    "https://ecommerce-back-end-ten.vercel.app/api/current-user",
+    `${API_URL}/api/current-user`,
     {},
     {
       headers: {
@@ -14,7 +15,7 @@ export const currentUser = async (token) =>
 //   แบบมีปีกกา ต้องมี return
 export const currentAdmin = async (token) => {
   return await axios.post(
-    "https://ecommerce-back-end-ten.vercel.app/api/current-admin",
+    `${API_URL}/api/current-admin`,
     {},
     {
       headers: {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { listCategory } from "../api/category";
+import { listCategory } from "../api/Category";
 import { listProduct, searchFilters } from "../api/product";
 import _ from "lodash";
 

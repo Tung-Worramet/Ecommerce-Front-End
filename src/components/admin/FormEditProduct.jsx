@@ -58,67 +58,163 @@ const FormEditProduct = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-white shadow-md rounded-md">
-      <form onSubmit={handleSubmit}>
-        <h1>เพิ่มข้อมูลสินค้า</h1>
-        <input
-          className="border"
-          value={form.title}
-          onChange={handleOnChange}
-          placeholder="Title"
-          name="title"
-        />
-        <input
-          className="border"
-          value={form.description}
-          onChange={handleOnChange}
-          placeholder="Description"
-          name="description"
-        />
-        <input
-          className="border"
-          value={form.price}
-          onChange={handleOnChange}
-          placeholder="Price"
-          name="price"
-          type="number"
-        />
-        <input
-          className="border"
-          value={form.quantity}
-          onChange={handleOnChange}
-          placeholder="Quantity"
-          name="quantity"
-          type="number"
-        />
-        <select
-          className="border"
-          name="categoryId"
-          onChange={handleOnChange}
-          required
-          value={form.categoryId}
-        >
-          <option value="" disabled>
-            Please Select
-          </option>
-          {categories.map((item, index) => (
-            // กำหนด value เพื่อที่จะเอา id
-            <option key={index} value={item.id}>
-              {item.name}
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-3">
+      <h1 className="text-2xl font-bold text-gray-700 mb-4">
+        📦 เพิ่ม/แก้ไขสินค้า
+      </h1>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* 📝 Input: Title */}
+        <div>
+          <label className="block text-gray-600 mb-1">ชื่อสินค้า</label>
+          <input
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={form.title}
+            onChange={handleOnChange}
+            placeholder="Title"
+            name="title"
+            required
+          />
+        </div>
+
+        {/* 📝 Input: Description */}
+        <div>
+          <label className="block text-gray-600 mb-1">รายละเอียดสินค้า</label>
+          <textarea
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={form.description}
+            onChange={handleOnChange}
+            placeholder="Description"
+            name="description"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+
+        {/* 📝 Input: Price & Quantity */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-600 mb-1">ราคา</label>
+            <input
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={form.price}
+              onChange={handleOnChange}
+              placeholder="Price"
+              name="price"
+              type="number"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-600 mb-1">จำนวน</label>
+            <input
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={form.quantity}
+              onChange={handleOnChange}
+              placeholder="Quantity"
+              name="quantity"
+              type="number"
+              required
+            />
+          </div>
+        </div>
+
+        {/* 🛒 Select: Category */}
+        <div>
+          <label className="block text-gray-600 mb-1">หมวดหมู่</label>
+          <select
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="categoryId"
+            onChange={handleOnChange}
+            required
+            value={form.categoryId}
+          >
+            <option value="" disabled>
+              กรุณาเลือกหมวดหมู่
             </option>
-          ))}
-        </select>
-        <hr />
+            {categories.map((item, index) => (
+              <option key={index} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        {/* Upload file */}
-        {/* form={form} setForm={setForm} คือการส่ง props ไปให้ UploadFile สิ่งที่จะนำไปใช้คือคำด้านหน้า = คือ form setForm ส่วนใน {} คือ ข้อมูลในหน้านี้ */}
-        <UploadFile form={form} setForm={setForm} />
+        {/* 📷 File Upload */}
+        <div>
+          {/* <label className="block text-gray-600 mb-1">รูปภาพ</label> */}
+          <UploadFile form={form} setForm={setForm} />
+        </div>
 
-        <button className="bg-blue-500">แก้ไขสินค้า</button>
+        {/* 🔘 Submit Button */}
+        <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all font-bold">
+          🛒 เพิ่ม/แก้ไขสินค้า
+        </button>
       </form>
-      <hr />
-      <br />
     </div>
+
+    // โค้ดเก่า
+    // <div className="container mx-auto p-4 bg-white shadow-md rounded-md">
+    //   <form onSubmit={handleSubmit}>
+    //     <h1>เพิ่มข้อมูลสินค้า</h1>
+    //     <input
+    //       className="border"
+    //       value={form.title}
+    //       onChange={handleOnChange}
+    //       placeholder="Title"
+    //       name="title"
+    //     />
+    //     <input
+    //       className="border"
+    //       value={form.description}
+    //       onChange={handleOnChange}
+    //       placeholder="Description"
+    //       name="description"
+    //     />
+    //     <input
+    //       className="border"
+    //       value={form.price}
+    //       onChange={handleOnChange}
+    //       placeholder="Price"
+    //       name="price"
+    //       type="number"
+    //     />
+    //     <input
+    //       className="border"
+    //       value={form.quantity}
+    //       onChange={handleOnChange}
+    //       placeholder="Quantity"
+    //       name="quantity"
+    //       type="number"
+    //     />
+    //     <select
+    //       className="border"
+    //       name="categoryId"
+    //       onChange={handleOnChange}
+    //       required
+    //       value={form.categoryId}
+    //     >
+    //       <option value="" disabled>
+    //         Please Select
+    //       </option>
+    //       {categories.map((item, index) => (
+    //         // กำหนด value เพื่อที่จะเอา id
+    //         <option key={index} value={item.id}>
+    //           {item.name}
+    //         </option>
+    //       ))}
+    //     </select>
+    //     <hr />
+
+    //     {/* Upload file */}
+    //     {/* form={form} setForm={setForm} คือการส่ง props ไปให้ UploadFile สิ่งที่จะนำไปใช้คือคำด้านหน้า = คือ form setForm ส่วนใน {} คือ ข้อมูลในหน้านี้ */}
+    //     <UploadFile form={form} setForm={setForm} />
+
+    //     <button className="bg-blue-500">แก้ไขสินค้า</button>
+    //   </form>
+    //   <hr />
+    //   <br />
+    // </div>
   );
 };
 

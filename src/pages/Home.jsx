@@ -5,13 +5,13 @@ import NewProduct from "../components/home/NewProduct";
 
 const Home = () => {
   return (
-    <div>
+    <div className="container mx-auto pt-6">
       <ContentCarousel />
 
-      <p className="text-2xl text-center my-4">สินค้าขายดี</p>
+      <p className="text-3xl font-bold text-center my-4 pt-20">สินค้าขายดี</p>
       <BestSeller />
 
-      <p className="text-2xl text-center my-4">สินค้าใหม่</p>
+      <p className="text-3xl font-bold text-center my-4 pt-20">สินค้าใหม่</p>
       <NewProduct />
     </div>
   );

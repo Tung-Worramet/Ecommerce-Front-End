@@ -26,43 +26,52 @@ const ContentCarousel = () => {
   };
 
   return (
-    <div>
-      <Swiper
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={true}
-        // navigation={true}
-        modules={[Pagination, Autoplay, Navigation]}
-        className="mySwiper h-80 rounded-md mb-6"
-      >
-        {data?.map((item, index) => (
-          <SwiperSlide key={index}>
-            <img src={item.download_url} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <Swiper
-        slidesPerView={5}
-        spaceBetween={10}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={true}
-        navigation={true}
-        modules={[Pagination, Autoplay, Navigation]}
-        className="mySwiper rounded-md"
-      >
-        {data?.map((item, index) => (
-          <SwiperSlide key={index}>
-            <img className="rounded-md" src={item.download_url} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <div className="container mx-auto">
+      <img
+        src="/images/DIY.jpg"
+        alt="Computer Set"
+        className="w-full h-auto max-h-[650px] object-cover rounded-md shadow-md"
+      />
     </div>
+
+    // โค้ดเก่า
+    // <div>
+    //   <Swiper
+    //     autoplay={{
+    //       delay: 2500,
+    //       disableOnInteraction: false,
+    //     }}
+    //     pagination={true}
+    //     // navigation={true}
+    //     modules={[Pagination, Autoplay, Navigation]}
+    //     className="mySwiper h-80 rounded-md mb-6"
+    //   >
+    //     {data?.map((item, index) => (
+    //       <SwiperSlide key={index}>
+    //         <img src={item.download_url} />
+    //       </SwiperSlide>
+    //     ))}
+    //   </Swiper>
+
+    //   <Swiper
+    //     slidesPerView={5}
+    //     spaceBetween={10}
+    //     autoplay={{
+    //       delay: 2500,
+    //       disableOnInteraction: false,
+    //     }}
+    //     pagination={true}
+    //     navigation={true}
+    //     modules={[Pagination, Autoplay, Navigation]}
+    //     className="mySwiper rounded-md"
+    //   >
+    //     {data?.map((item, index) => (
+    //       <SwiperSlide key={index}>
+    //         <img className="rounded-md" src={item.download_url} />
+    //       </SwiperSlide>
+    //     ))}
+    //   </Swiper>
+    // </div>
   );
 };
 

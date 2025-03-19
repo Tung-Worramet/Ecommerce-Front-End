@@ -12,8 +12,8 @@ import { dateFormat } from "../../utils/dateformat";
 const initialState = {
   title: "",
   description: "",
-  price: 0,
-  quantity: 0,
+  price: "",
+  quantity: "",
   categoryId: "",
   images: [],
 };
@@ -30,8 +30,8 @@ const FormProduct = () => {
   const [form, setForm] = useState({
     title: "",
     description: "",
-    price: 0,
-    quantity: 0,
+    price: null,
+    quantity: null,
     categoryId: "",
     images: [],
   });
@@ -76,125 +76,261 @@ const FormProduct = () => {
   };
 
   return (
-    // standard
-    <div className="container mx-auto p-4 bg-white shadow-md rounded-md">
-      <form onSubmit={handleSubmit}>
-        <h1>เพิ่มข้อมูลสินค้า</h1>
-        <input
-          className="border"
-          value={form.title}
-          onChange={handleOnChange}
-          placeholder="Title"
-          name="title"
-        />
-        <input
-          className="border"
+    <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-3">
+      <h1 className="text-2xl font-bold text-gray-700 mb-4">📦 จัดการสินค้า</h1>
+
+      {/* ✅ Form เพิ่มสินค้า */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            className="border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={form.title}
+            onChange={handleOnChange}
+            placeholder="ชื่อสินค้า"
+            name="title"
+          />
+
+          <input
+            className="border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={form.price}
+            onChange={handleOnChange}
+            placeholder="ราคา"
+            name="price"
+            type="number"
+          />
+
+          <input
+            className="border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={form.quantity}
+            onChange={handleOnChange}
+            placeholder="จำนวนสินค้า"
+            name="quantity"
+            type="number"
+          />
+          <select
+            className="border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            name="categoryId"
+            onChange={handleOnChange}
+            required
+            value={form.categoryId}
+          >
+            <option value="" disabled>
+              เลือกหมวดหมู่สินค้า
+            </option>
+            {categories.map((item, index) => (
+              <option key={index} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <textarea
+          className="border px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={form.description}
           onChange={handleOnChange}
-          placeholder="Description"
+          placeholder="รายละเอียดสินค้า"
           name="description"
+          rows="3"
         />
-        <input
-          className="border"
-          value={form.price}
-          onChange={handleOnChange}
-          placeholder="Price"
-          name="price"
-          type="number"
-        />
-        <input
-          className="border"
-          value={form.quantity}
-          onChange={handleOnChange}
-          placeholder="Quantity"
-          name="quantity"
-          type="number"
-        />
-        <select
-          className="border"
-          name="categoryId"
-          onChange={handleOnChange}
-          required
-          value={form.categoryId}
-        >
-          <option value="" disabled>
-            Please Select
-          </option>
-          {categories.map((item, index) => (
-            // กำหนด value เพื่อที่จะเอา id
-            <option key={index} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-        <hr />
 
-        {/* Upload file */}
-        {/* form={form} setForm={setForm} คือการส่ง props ไปให้ UploadFile สิ่งที่จะนำไปใช้คือคำด้านหน้า = คือ form setForm ส่วนใน {} คือ ข้อมูลในหน้านี้ */}
+        <hr className="my-4" />
+
+        {/* ✅ Upload รูปภาพ */}
         <UploadFile form={form} setForm={setForm} />
 
-        <button className="bg-blue-500 p-2 rounded-md shadow-md hover:scale-110 hover:-translate-y-1 hover:duration-500">
+        <button
+          type="submit"
+          className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-2"
+        >
           เพิ่มสินค้า
         </button>
       </form>
-      <hr />
-      <br />
-      <table className="table w-full text-center border">
-        <thead>
-          <tr className="bg-gray-200 border">
-            <th scope="col">ลำดับ</th>
-            <th scope="col">รูปภาพ</th>
-            <th scope="col">ชื่อสินค้า</th>
-            <th scope="col">รายละเอียด</th>
-            <th scope="col">ราคา</th>
-            <th scope="col">จำนวน</th>
-            <th scope="col">จำนวนที่ขาย</th>
-            <th scope="col">วันที่อัพเดต</th>
-            <th scope="col">จัดการ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((item, index) => (
-            <tr key={index}>
-              <th scope="row">{index + 1}</th>
-              <td>
-                {item.images.length > 0 ? (
-                  <img
-                    className="w-24 h-24 rounded-lg shadow-md"
-                    src={item.images[0].url}
-                  />
-                ) : (
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center shadow-md">
-                    No Image
-                  </div>
-                )}
-              </td>
-              <td>{item.title}</td>
-              <td>{item.description}</td>
-              <td>{numberFormat(item.price)}</td>
-              <td>{item.quantity}</td>
-              <td>{item.sold}</td>
-              <td>{dateFormat(item.updatedAt)}</td>
-              <td className="flex gap-2">
-                <p className="bg-yellow-400 rounded-md p-1 shadow-md hover:scale-110 hover:-translate-y-1 hover:duration-500">
-                  <Link to={"/admin/product/" + item.id}>
-                    <Pencil />
-                  </Link>
-                </p>
-                <p
-                  className="bg-red-500 rounded-md p-1 shadow-md hover:scale-110 hover:-translate-y-1 hover:duration-500"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  <Trash />
-                </p>
-              </td>
+
+      <hr className="my-6" />
+
+      {/* ✅ ตารางแสดงสินค้า */}
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border">ลำดับ</th>
+              <th className="p-2 border">รูปภาพ</th>
+              <th className="p-2 border">ชื่อสินค้า</th>
+              <th className="p-2 border">รายละเอียด</th>
+              <th className="p-2 border">ราคา</th>
+              <th className="p-2 border">จำนวน</th>
+              <th className="p-2 border">จำนวนที่ขาย</th>
+              <th className="p-2 border">อัปเดตล่าสุด</th>
+              <th className="p-2 border">จัดการ</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {products.map((item, index) => (
+              <tr
+                key={index}
+                className="border hover:bg-gray-50 transition text-center"
+              >
+                <td className="p-2 ">{index + 1}</td>
+                <td className="p-2 h-24 align-middle text-center">
+                  {item.images.length > 0 ? (
+                    <img
+                      className="w-24 h-24 rounded-lg shadow-md object-cover"
+                      src={item.images[0].url}
+                      alt={item.title}
+                    />
+                  ) : (
+                    <div className="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center shadow-md">
+                      No Image
+                    </div>
+                  )}
+                </td>
+                <td className="p-2">{item.title}</td>
+                <td className="p-2 truncate max-w-sm ">{item.description}</td>
+                <td className="p-2">{numberFormat(item.price)}</td>
+                <td className="p-2">{item.quantity}</td>
+                <td className="p-2">{item.sold}</td>
+                <td className="p-2">{dateFormat(item.updatedAt)}</td>
+                <td className="p-2 h-24 align-middle flex gap-2 justify-center items-center">
+                  <Link
+                    to={`/admin/product/${item.id}`}
+                    className="bg-yellow-400 text-white w-10 h-10 flex items-center justify-center rounded-md shadow-md hover:scale-105 transition"
+                  >
+                    <Pencil size={20} />
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="bg-red-500 text-white w-10 h-10 flex items-center justify-center rounded-md shadow-md hover:scale-105 transition"
+                  >
+                    <Trash size={20} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    // // แต่ง css
+    // standard
+    // <div className="container mx-auto p-4 bg-white shadow-md rounded-md">
+    //   <form onSubmit={handleSubmit}>
+    //     <h1>เพิ่มข้อมูลสินค้า</h1>
+    //     <input
+    //       className="border"
+    //       value={form.title}
+    //       onChange={handleOnChange}
+    //       placeholder="Title"
+    //       name="title"
+    //     />
+    //     <input
+    //       className="border"
+    //       value={form.description}
+    //       onChange={handleOnChange}
+    //       placeholder="Description"
+    //       name="description"
+    //     />
+    //     <input
+    //       className="border"
+    //       value={form.price}
+    //       onChange={handleOnChange}
+    //       placeholder="Price"
+    //       name="price"
+    //       type="number"
+    //     />
+    //     <input
+    //       className="border"
+    //       value={form.quantity}
+    //       onChange={handleOnChange}
+    //       placeholder="Quantity"
+    //       name="quantity"
+    //       type="number"
+    //     />
+    //     <select
+    //       className="border"
+    //       name="categoryId"
+    //       onChange={handleOnChange}
+    //       required
+    //       value={form.categoryId}
+    //     >
+    //       <option value="" disabled>
+    //         Please Select
+    //       </option>
+    //       {categories.map((item, index) => (
+    //         // กำหนด value เพื่อที่จะเอา id
+    //         <option key={index} value={item.id}>
+    //           {item.name}
+    //         </option>
+    //       ))}
+    //     </select>
+    //     <hr />
+
+    //     {/* Upload file */}
+    //     {/* form={form} setForm={setForm} คือการส่ง props ไปให้ UploadFile สิ่งที่จะนำไปใช้คือคำด้านหน้า = คือ form setForm ส่วนใน {} คือ ข้อมูลในหน้านี้ */}
+    //     <UploadFile form={form} setForm={setForm} />
+
+    //     <button className="bg-blue-500 p-2 rounded-md shadow-md hover:scale-110 hover:-translate-y-1 hover:duration-500">
+    //       เพิ่มสินค้า
+    //     </button>
+    //   </form>
+    //   <hr />
+    //   <br />
+    //   <table className="table w-full text-center border">
+    //     <thead>
+    //       <tr className="bg-gray-200 border">
+    //         <th scope="col">ลำดับ</th>
+    //         <th scope="col">รูปภาพ</th>
+    //         <th scope="col">ชื่อสินค้า</th>
+    //         <th scope="col">รายละเอียด</th>
+    //         <th scope="col">ราคา</th>
+    //         <th scope="col">จำนวน</th>
+    //         <th scope="col">จำนวนที่ขาย</th>
+    //         <th scope="col">วันที่อัพเดต</th>
+    //         <th scope="col">จัดการ</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>
+    //       {products.map((item, index) => (
+    //         <tr key={index}>
+    //           <th scope="row">{index + 1}</th>
+    //           <td>
+    //             {item.images.length > 0 ? (
+    //               <img
+    //                 className="w-24 h-24 rounded-lg shadow-md"
+    //                 src={item.images[0].url}
+    //               />
+    //             ) : (
+    //               <div className="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center shadow-md">
+    //                 No Image
+    //               </div>
+    //             )}
+    //           </td>
+    //           <td>{item.title}</td>
+    //           <td>{item.description}</td>
+    //           <td>{numberFormat(item.price)}</td>
+    //           <td>{item.quantity}</td>
+    //           <td>{item.sold}</td>
+    //           <td>{dateFormat(item.updatedAt)}</td>
+    //           <td className="flex gap-2">
+    //             <p className="bg-yellow-400 rounded-md p-1 shadow-md hover:scale-110 hover:-translate-y-1 hover:duration-500">
+    //               <Link to={"/admin/product/" + item.id}>
+    //                 <Pencil />
+    //               </Link>
+    //             </p>
+    //             <p
+    //               className="bg-red-500 rounded-md p-1 shadow-md hover:scale-110 hover:-translate-y-1 hover:duration-500"
+    //               onClick={() => handleDelete(item.id)}
+    //             >
+    //               <Trash />
+    //             </p>
+    //           </td>
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
+
+    // แต่ง css
     // <div className="container mx-auto p-6 bg-gray-100">
     //   {/* ฟอร์มเพิ่มสินค้า */}
     //   <form

@@ -1,8 +1,12 @@
 import React from "react";
+import { LogOut, Bell, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeaderbarAdmin = () => {
   return (
-    <header className="bg-red-400 h-16 flex items-center px-6">Header</header>
+    <></>
+    // โค้ดเก่า
+    // <header className="bg-gray-300 h-16 flex items-center px-6"></header>
   );
 };
 
